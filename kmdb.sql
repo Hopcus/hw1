@@ -101,13 +101,275 @@
 
 -- Drop existing tables, so you'll start fresh each time this script is run.
 -- TODO!
+DROP TABLE IF EXISTS movies;
+DROP TABLE IF EXISTS studios;
+DROP TABLE IF EXISTS actors;
+DROP TABLE IF EXISTS cast_memberships;
+
 
 -- Create new tables, according to your domain model
 -- TODO!
 
+CREATE TABLE movies (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  movie_title TEXT,
+  year_released TEXT,
+  mpaa_rating TEXT,
+  studio_id INTEGER
+);
+
+CREATE TABLE studios (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  studio_name TEXT
+);
+
+CREATE TABLE actors (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  actor_name TEXT,
+  character_name TEXT
+);
+
+CREATE TABLE cast_memberships (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  movie_id INTEGER,
+  actor_id INTEGER
+);
+
+
+
 -- Insert data into your database that reflects the sample data shown above
 -- Use hard-coded foreign key IDs when necessary
 -- TODO!
+
+-- STUDIOS: adding warner bros
+INSERT INTO studios (
+    "studio_name"
+) VALUES (
+    "Warner Bros."
+);
+
+-- MOVIES: adding three movies tied to first studio (WB)
+INSERT INTO movies (
+    "movie_title",
+    "year_released",
+    "mpaa_rating",
+    "studio_id"
+) VALUES (
+    "Batman Begins",
+    "2005",
+    "PG-13",
+    "1"
+);
+ INSERT INTO movies (
+    "movie_title",
+    "year_released",
+    "mpaa_rating",
+    "studio_id"
+) VALUES (
+    "The Dark Knight",
+    "2008",
+    "PG-13",
+    "1"
+);
+ INSERT INTO movies (
+    "movie_title",
+    "year_released",
+    "mpaa_rating",
+    "studio_id"
+) VALUES (
+    "The Dark Knight Rises",
+    "2012",
+    "PG-13",
+    "1"
+);
+-- ACTORS: adding 11 actors
+ INSERT INTO actors (
+    "actor_name",
+    "character_name"
+) VALUES (
+    "Christian Bale",
+    "Bruce Wayne"
+);
+ INSERT INTO actors (
+    "actor_name",
+    "character_name"
+) VALUES (
+    "Michael Caine",
+    "Alfred"
+);
+ INSERT INTO actors (
+    "actor_name",
+    "character_name"
+) VALUES (
+    "Liam Neeson",
+    "Ra's Al Ghul"
+);
+ INSERT INTO actors (
+    "actor_name",
+    "character_name"
+) VALUES (
+    "Katie Holmes",
+    "Rachel Dawes"
+);
+ INSERT INTO actors (
+    "actor_name",
+    "character_name"
+) VALUES (
+    "Gary Oldman",
+    "Commissioner Gordon"
+);
+ INSERT INTO actors (
+    "actor_name",
+    "character_name"
+) VALUES (
+    "Heath Ledger",
+    "Joker"
+);
+ INSERT INTO actors (
+    "actor_name",
+    "character_name"
+) VALUES (
+    "Aaron Eckhart",
+    "Harvey Dent"
+);
+ INSERT INTO actors (
+    "actor_name",
+    "character_name"
+) VALUES (
+    "Maggie Gyllenhaal",
+    "Rachel Dawes"
+);
+ INSERT INTO actors (
+    "actor_name",
+    "character_name"
+) VALUES (
+    "Tom Hardy",
+    "Bane"
+);
+ INSERT INTO actors (
+    "actor_name",
+    "character_name"
+) VALUES (
+    "Joseph Gordon-Levitt",
+    "John Blake"
+);
+ INSERT INTO actors (
+    "actor_name",
+    "character_name"
+) VALUES (
+    "Anne Hathaway",
+    "Selina Kyle"
+);
+
+-- CAST MEMBERS: assigning movie and actor IDS
+  INSERT INTO cast_memberships (
+    "movie_id",
+    "actor_id"
+) VALUES (
+    "1",
+    "1"
+);
+  INSERT INTO cast_memberships (
+    "movie_id",
+    "actor_id"
+) VALUES (
+    "1",
+    "2"
+);
+  INSERT INTO cast_memberships (
+    "movie_id",
+    "actor_id"
+) VALUES (
+    "1",
+    "3"
+);
+  INSERT INTO cast_memberships (
+    "movie_id",
+    "actor_id"
+) VALUES (
+    "1",
+    "4"
+);
+  INSERT INTO cast_memberships (
+    "movie_id",
+    "actor_id"
+) VALUES (
+    "1",
+    "5"
+);
+--SECOND CAST
+  INSERT INTO cast_memberships (
+    "movie_id",
+    "actor_id"
+) VALUES (
+    "2",
+    "1"
+);
+  INSERT INTO cast_memberships (
+    "movie_id",
+    "actor_id"
+) VALUES (
+    "2",
+    "6"
+);  
+INSERT INTO cast_memberships (
+    "movie_id",
+    "actor_id"
+) VALUES (
+    "2",
+    "7"
+);  
+INSERT INTO cast_memberships (
+    "movie_id",
+    "actor_id"
+) VALUES (
+    "2",
+    "2"
+);  
+INSERT INTO cast_memberships (
+    "movie_id",
+    "actor_id"
+) VALUES (
+    "2",
+    "8"
+);
+-- THIRD CAST
+INSERT INTO cast_memberships (
+    "movie_id",
+    "actor_id"
+) VALUES (
+    "3",
+    "1"
+);
+INSERT INTO cast_memberships (
+    "movie_id",
+    "actor_id"
+) VALUES (
+    "3",
+    "5"
+);
+INSERT INTO cast_memberships (
+    "movie_id",
+    "actor_id"
+) VALUES (
+    "3",
+    "9"
+);
+INSERT INTO cast_memberships (
+    "movie_id",
+    "actor_id"
+) VALUES (
+    "3",
+    "10"
+);
+INSERT INTO cast_memberships (
+    "movie_id",
+    "actor_id"
+) VALUES (
+    "3",
+    "11"
+);
+
 
 -- Prints a header for the movies output
 .print "Movies"
@@ -116,6 +378,9 @@
 
 -- The SQL statement for the movies output
 -- TODO!
+
+SELECT movie_title, year_released, mpaa_rating, studio_name
+FROM movies INNER JOIN studios ON studio_id = studios.id;
 
 -- Prints a header for the cast output
 .print ""
@@ -126,3 +391,8 @@
 
 -- The SQL statement for the cast output
 -- TODO!
+
+SELECT movie_title, actor_name, character_name
+FROM cast_memberships 
+INNER JOIN movies ON movie_id = movies.id
+INNER JOIN actors ON actor_id = actors.id;
